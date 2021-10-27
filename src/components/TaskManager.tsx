@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
-import Card from './card/Card';
 import { TasksResponse } from '../types/responseTypes';
 import { getTasks } from '../utils/apiService';
+import Card from './card/Card';
+import { Spin } from 'antd';
+import ProgressBar from './progress/ProgressBar';
 
 const Wrapper = styled.main`
   width: 100%;
@@ -11,6 +13,8 @@ const Wrapper = styled.main`
   justify-content: center;
   align-items: center;
 `;
+
+const EmptyState = styled.p`align-self: center;`;
 
 const TaskManager = () => {
   const [tasks, setTasks] = useState<TasksResponse>();
@@ -24,7 +28,15 @@ const TaskManager = () => {
 
   return (
     <Wrapper>
-      <Card></Card>
+      <Suspense fallback={<Spin />}>
+        <Card>
+          {!!tasks ? (
+            <ProgressBar percentage={30} />
+          ) : (
+            <EmptyState>There are no tasks available.</EmptyState>
+          )}
+        </Card>
+      </Suspense>
     </Wrapper>
   );
 };
