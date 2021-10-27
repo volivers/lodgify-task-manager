@@ -10,7 +10,6 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     width: 100%;
     background-color: #EEEEEE;
-    overflow: hidden;
   }
   body {
     margin: 0;

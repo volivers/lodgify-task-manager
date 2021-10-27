@@ -5,6 +5,7 @@ import { getTasks } from '../utils/apiService';
 import Card from './card/Card';
 import { Spin } from 'antd';
 import ProgressBar from './progress/ProgressBar';
+import TaskList from './tasks/TasksList';
 
 const Wrapper = styled.main`
   width: 100%;
@@ -14,28 +15,23 @@ const Wrapper = styled.main`
   align-items: center;
 `;
 
-const EmptyState = styled.p`align-self: center;`;
-
 const TaskManager = () => {
-  const [tasks, setTasks] = useState<TasksResponse>();
+  const [groups, setGroups] = useState<TasksResponse>();
   useEffect(() => {
     getTasks()
-      .then(response => setTasks(response.data))
+      .then(response => setGroups(response.data))
       .catch((error) => alert(error));
   }, []);
-
-  console.log(tasks)
 
   return (
     <Wrapper>
       <Suspense fallback={<Spin />}>
-        <Card>
-          {!!tasks ? (
+        {!!groups && (
+          <Card>
             <ProgressBar percentage={30} />
-          ) : (
-            <EmptyState>There are no tasks available.</EmptyState>
-          )}
-        </Card>
+            <TaskList groups={Object.values(groups)} />
+          </Card>
+        )}
       </Suspense>
     </Wrapper>
   );

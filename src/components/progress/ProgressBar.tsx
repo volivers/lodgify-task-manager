@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Progress } from 'antd';
 
 const Wrapper = styled.div`
@@ -9,24 +9,24 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Bar = styled(Progress)`
+const StyledBar = styled(Progress)`
   position: relative;
   > span {
-    font-family: 'Source Sans Pro';
+    font-family: ${({ theme }) => theme.typography.body};
     font-weight: 600;
     font-size: 16px;
     position: absolute;
     top: 15%;
-    left: ${({ percent }) =>
-    percent !== 0
-      ? `calc(${percent}% - 10%)`
-      : '0%'
-  };
-    color: ${({ theme, percent }) =>
-    percent !== 0
-      ? theme.palette.white
-      : theme.palette.primary
-  };
+
+    ${({ theme, percent }) => percent !== 0 ?
+    css`
+      left: calc(${percent}% - 10%);
+      color: ${theme.palette.white};
+    `
+    : css`
+      left: 0%;
+      color: ${theme.palette.primary};
+    `}
   }
   > div {
     > div {
@@ -38,7 +38,7 @@ const Bar = styled(Progress)`
   }
 `;
 
-const Label = styled.h1`margin-bottom: 0.5rem`;
+const Label = styled.h1`margin-bottom: 1rem`;
 
 type Props = {
   percentage: number;
@@ -50,7 +50,7 @@ const ProgressBar: React.FC<Props> = ({
   return (
     <Wrapper>
       <Label>Lodgify Grouped Tasks</Label>
-      <Bar percent={percentage} strokeColor="#00B797" trailColor="#F2FBFA" />
+      <StyledBar percent={percentage} strokeColor="#00B797" trailColor="#F2FBFA" />
     </Wrapper>
   );
 };
