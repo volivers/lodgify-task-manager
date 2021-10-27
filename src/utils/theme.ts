@@ -1,6 +1,7 @@
 const palette = {
   primary: '#00B797',
   light: '#EEEEEE',
+  dark: '#CCCCCC',
   white: '#FFFFFF',
   black: '#000000',
   success: '#2EE6A5',
@@ -28,6 +29,7 @@ const boxShadows = {
     l: '-12px 12px 18px 0 rgba(0, 0, 0, 0.3)',
     xl: '-15px 15px 26px 0 rgba(0, 0, 0, 0.2)',
   },
+  custom: '0px 5px 30px 0px rgba(0, 0, 0, 0.2)',
 };
 
 const theme = {

@@ -15,10 +15,11 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    min-height: calc(100vh - 2.25rem);
+    min-height: 100vh;
     width: 100%;
     font-family: 'Source Sans Pro';
     color: #333333;
+    background-color: #EEEEEE;
     display: flex;
     flex-direction: column;
     position: relative;
