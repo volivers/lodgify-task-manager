@@ -1,46 +1,84 @@
-# Getting Started with Create React App
+# Lodgify Task Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Lodgify user profile task manager built with React, [Styled Components](https://styled-components.com/)
+and [Ant Design](https://ant.design/).
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+The Lodgify Task Manager is a widget that shows the current progress of the user profile creation.
+The user is able to check the missing tasks of a specific group and mark them as done.
 
-### `yarn start`
+## Live version
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The live version is available at: <https://lodgify-task-manager.netlify.app/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Install
 
-### `yarn test`
+This project was created using [CRA](https://github.com/facebook/create-react-app).
+To run the code, first install all the dependencies needed with:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`yarn install`
 
-### `yarn build`
+Then, you will be able to start the project executing the command:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`yarn start`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+It will open [http://localhost:3000](http://localhost:3000) (default),
+so you can view the project in the browser.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Architecture
 
-### `yarn eject`
+The project was architectured in the following way:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `/src`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The `/src` contains all the React codebase.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+.
+├── components
+│   ├── card
+│   │   └── Card.tsx
+│   ├── progress
+│   │   └── ProgressBar.tsx
+│   ├── tasks
+│   │   ├── Task.tsx
+│   │   └── TasksList.tsx
+│   ├── GlobalStyle.ts
+│   └── TaskManager.tsx
+├── types
+│   ├── domainTypes.ts
+│   └── responseTypes.ts
+├── utils
+│   ├── apiCall.ts
+│   ├── apiService.ts
+│   ├── calculations.ts
+│   └── theme.ts
+├── _app.tsx
+└── index.tsx
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
 
-## Learn More
+#### `/components`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This folder includes all the components used to build the project, dumb and smart ones.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### `/types`
+
+It contains the response and domain types used in this project.
+
+#### `/utils`
+
+It contains all the functions used to fetch data and calculate the progress of the user profile creation,
+along with the main theme.
+
+## Contributing
+
+Pull requests are welcome. For major changes, open an issue first to discuss what you would like to change.
+Please make sure to include or update tests as appropriate.
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Copyright © 2021 Vasco Oliveira
