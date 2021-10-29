@@ -1,8 +1,11 @@
+export interface Task {
+  description: string;
+  name?: string;
+  value: number;
+  checked: boolean;
+}
+
 export interface Group {
   name: string;
-  tasks: {
-    description: string;
-    value: number;
-    checked: boolean;
-  }[];
+  tasks: Task[];
 }

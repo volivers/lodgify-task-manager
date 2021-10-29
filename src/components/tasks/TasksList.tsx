@@ -1,11 +1,14 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Group } from '../../types/domainTypes';
+import { flatten, calculatePercentage } from '../../utils/calculations';
+import ProgressBar from '../progress/ProgressBar';
 import { Collapse } from 'antd';
 import { ClipboardListIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/outline';
+import Task from './Task';
 
-const Wrapper = styled.div`
+const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,21 +23,15 @@ const StyledCollapse = styled(Collapse)`
     border-bottom: 1px solid ${({ theme }) => theme.palette.dark} !important;
     > div {
       padding: 1.5rem !important;
+      > div {
+        padding: 0 !important;
+      }
     }
   }
 `;
 
-const Name = styled.p`
-  display: flex;
-  align-items: center;
-  margin: 0;
-  > svg {
-    margin-right: 0.75rem;
-  }
-`;
-
-const Toggle = styled.p<{ isActive?: boolean }>`
-  color: #999999;
+const StyledToggle = styled.p<{ isActive?: boolean }>`
+  color: ${({ theme }) => theme.palette.accent};
   font-size: 16px !important;
   display: flex !important;
   align-items: center !important;
@@ -50,42 +47,71 @@ const Toggle = styled.p<{ isActive?: boolean }>`
   }
 `;
 
+const Label = styled.p<{ isComplete?: boolean }>`
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: ${({ isComplete, theme }) => isComplete ? theme.palette.primary : theme.palette.body};
+  > svg {
+    margin-right: 0.75rem;
+  }
+`;
+
+const CheckboxGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 type Props = {
   groups: Group[];
+  setGroups: (prev: any) => void;
 };
 
 const TasksList: React.FC<Props> = ({
   groups,
+  setGroups,
 }) => {
+  const tasks = flatten(groups?.map(group => group.tasks));
   const { Panel } = Collapse;
 
   return (
-    <Wrapper>
-      <StyledCollapse
-        expandIconPosition="right"
-        expandIcon={({ isActive }) =>
-          <Toggle isActive={isActive}>
-            {isActive ? 'Hide' : 'Show'}
-            <ChevronDownIcon height="25" />
-          </Toggle>
-        }
-      >
-        {groups.map((group, ind) => (
-          <Panel
-            key={ind}
-            header={
-              <Name>
-                <ClipboardListIcon height="25" /> {group.name}
-              </Name>
-            }
-          >
-            {group.tasks.map((task, ind) => (
-              <p key={ind}>{task.description}</p>
-            ))}
-          </Panel>
-        ))}
-      </StyledCollapse>
-    </Wrapper>
+    <>
+      <ProgressBar percentage={calculatePercentage(tasks)} />
+      <ListContainer>
+        <StyledCollapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) =>
+            <StyledToggle isActive={isActive}>
+              {isActive ? 'Hide' : 'Show'}
+              <ChevronDownIcon height="25" />
+            </StyledToggle>
+          }
+        >
+          {groups.map((group, ind) => (
+            <Panel
+              key={ind}
+              header={
+                <Label isComplete={group.tasks.every(task => task.checked === true)}>
+                  <ClipboardListIcon height="25" /> {group.name}
+                </Label>
+              }
+            >
+              <CheckboxGroup>
+                {group.tasks.map((task, ind) => (
+                  <Task
+                    key={ind}
+                    label={task.name ? task.name : task.description}
+                    checked={task.checked}
+                    groups={groups}
+                    setGroups={setGroups}
+                  />
+                ))}
+              </CheckboxGroup>
+            </Panel>
+          ))}
+        </StyledCollapse>
+      </ListContainer>
+    </>
   );
 };
 

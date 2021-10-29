@@ -8,6 +8,7 @@ const palette = {
   error: '#FE6077',
   info: '#FDBB42',
   body: '#333333',
+  accent: '#999999',
 };
 
 const typography = {

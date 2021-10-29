@@ -14,7 +14,6 @@ const Wrapper = styled.div`
 
   &:hover {
     box-shadow: ${({ theme }) => theme.boxShadows.custom};
-    transform: scale(1.01);
   }
 `;
 

@@ -4,7 +4,6 @@ import { TasksResponse } from '../types/responseTypes';
 import { getTasks } from '../utils/apiService';
 import Card from './card/Card';
 import { Spin } from 'antd';
-import ProgressBar from './progress/ProgressBar';
 import TaskList from './tasks/TasksList';
 
 const Wrapper = styled.main`
@@ -28,8 +27,7 @@ const TaskManager = () => {
       <Suspense fallback={<Spin />}>
         {!!groups && (
           <Card>
-            <ProgressBar percentage={30} />
-            <TaskList groups={Object.values(groups)} />
+            <TaskList groups={Object.values(groups)} setGroups={setGroups} />
           </Card>
         )}
       </Suspense>

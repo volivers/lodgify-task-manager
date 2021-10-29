@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { Progress } from 'antd';
 
 const Wrapper = styled.div`
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
